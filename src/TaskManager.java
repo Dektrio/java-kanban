@@ -1,13 +1,13 @@
 import java.util.*;
 
 public class TaskManager {
-    static int idCounter = 1;
+    private int idCounter = 1;
 
-    HashMap<Integer, Task> tasks;
-    HashMap<Integer, Epic> epics;
-    HashMap<Integer, Subtask> subtasks;
+    private HashMap<Integer, Task> tasks;
+    private HashMap<Integer, Epic> epics;
+    private HashMap<Integer, Subtask> subtasks;
 
-    public int generateId() {
+    private  int generateId() {
         return idCounter++;
     }
 
@@ -80,6 +80,8 @@ public class TaskManager {
 
     public void updateEpic(Epic epic) {
         if (epics.containsKey(epic.getId())) {
+            epic.setName(epic.getName());
+            epic.setDescription(epic.getDescription());
             epics.put(epic.getId(), epic);
         }
     }
@@ -120,11 +122,10 @@ public class TaskManager {
 
     public ArrayList<Subtask> getSubtasksByEpicId(int epicId) {
         Epic epic = epics.get(epicId);
-        if (epic != null) {
-            return epic.getSubtasks();
-        } else {
+        if (epic == null) {
             return new ArrayList<>();
         }
+        return epic.getSubtasks();
     }
 }
 
