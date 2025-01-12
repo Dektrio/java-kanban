@@ -1,4 +1,7 @@
+package taskManager;
+
 import java.util.*;
+import tasksProperties.*;
 
 public class TaskManager {
     private int idCounter = 1;
@@ -6,10 +9,6 @@ public class TaskManager {
     private HashMap<Integer, Task> tasks;
     private HashMap<Integer, Epic> epics;
     private HashMap<Integer, Subtask> subtasks;
-
-    private  int generateId() {
-        return idCounter++;
-    }
 
     public void addTask(Task task) {
         task.setId(generateId());
@@ -80,11 +79,11 @@ public class TaskManager {
 
     public void updateEpic(Epic epic) {
         if (epics.containsKey(epic.getId())) {
-            epic.setName(epic.getName());
-            epic.setDescription(epic.getDescription());
-            epics.put(epic.getId(), epic);
+            Epic neededEpic = epics.get(epic.getId());
+            neededEpic.setName(epic.getName());
+            neededEpic.setDescription(epic.getDescription());
         }
-    }
+    } //смог сообразить только такой вариант, надеюсь он подходит под требования
 
     public void updateSubtask(Subtask subtask) {
         if (subtasks.containsKey(subtask.getId())) {
@@ -126,6 +125,10 @@ public class TaskManager {
             return new ArrayList<>();
         }
         return epic.getSubtasks();
+    }
+
+    private int generateId() {
+        return idCounter++;
     }
 }
 

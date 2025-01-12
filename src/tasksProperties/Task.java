@@ -1,6 +1,8 @@
+package tasksProperties;
+
 import java.util.*;
 
-class Task {
+public class Task {
     private int id;
     private String name;
     private String description;

@@ -1,3 +1,5 @@
+package tasksProperties;
+
 public enum TaskStatus {
     NEW,
     IN_PROGRESS,

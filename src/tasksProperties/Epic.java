@@ -1,6 +1,8 @@
+package tasksProperties;
+
 import java.util.*;
 
-class Epic extends Task {
+public class Epic extends Task {
     private final ArrayList<Subtask> subtasks = new ArrayList<>();
 
     public Epic(String name, String description) {
