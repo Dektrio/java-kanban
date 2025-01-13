@@ -47,4 +47,16 @@ public class Epic extends Task {
             setStatus(TaskStatus.NEW);
         }
     }
+
+    @Override
+    public String toString() {
+        return "Epic{" +
+                "id=" + getId() +
+                ", name='" + getName() + '\'' +
+                ", description='" + getDescription() + '\'' +
+                ", status=" + getStatus() +
+                ", subtasksCount=" + subtasks.size() +
+                '}';
+    }
+
 }
