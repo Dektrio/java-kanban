@@ -1,5 +1,5 @@
 package tests;
-
+//надеюсь помещать тесты в пакет не является ошибкой
 import org.junit.jupiter.api.*;
 import properties.*;
 
