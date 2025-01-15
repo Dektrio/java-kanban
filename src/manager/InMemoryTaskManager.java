@@ -1,53 +1,43 @@
-package taskManager;
+package manager;
 
+import properties.*;
 import java.util.*;
-
-import tasksProperties.*;
 
 public class InMemoryTaskManager implements TaskManager {
     private int idCounter = 1;
 
-    private HashMap<Integer, Task> tasks = new HashMap<>();
-    private HashMap<Integer, Epic> epics = new HashMap<>();
-    private HashMap<Integer, Subtask> subtasks = new HashMap<>();
-    private LinkedList<Task> history = new LinkedList<>(); //решил использовать такой тип списка
-    //для ускорения удаления устаревших элементов истории
+    private final HashMap<Integer, Task> tasks = new HashMap<>();
+    private final HashMap<Integer, Epic> epics = new HashMap<>();
+    private final HashMap<Integer, Subtask> subtasks = new HashMap<>();
 
     private final HistoryManager historyManager = Managers.getDefaultHistory();
 
     @Override
     public void addTask(Task task) {
-        int id = task.getId();
-        while (tasks.containsKey(id) || epics.containsKey(id) || subtasks.containsKey(id)) {
-            id = generateId();
+        if (task != null) {
+            task.setId(generateId());
+            tasks.put(task.getId(), task);
         }
-        task.setId(id);
-        tasks.put(id, task);
     }
 
     @Override
     public void addEpic(Epic epic) {
-        int id = epic.getId();
-        while (tasks.containsKey(id) || epics.containsKey(id) || subtasks.containsKey(id)) {
-            id = generateId();
+        if (epic != null) {
+            epic.setId(generateId());
+            epics.put(epic.getId(), epic);
         }
-        epic.setId(id);
-        epics.put(id, epic);
     }
 
     @Override
     public void addSubtask(Subtask subtask) {
-        int id = subtask.getId();
-
-        while (tasks.containsKey(id) || epics.containsKey(id) || subtasks.containsKey(id)) {
-            id = generateId();
-        }
-        subtask.setId(id);
-        subtasks.put(id, subtask);
-        Epic epic = epics.get(subtask.getEpicId());
-        if (epic != null) {
-            epic.addSubtask(subtask);
-            epic.updateStatus();
+        if (subtask != null) {
+            subtask.setId(generateId());
+            subtasks.put(subtask.getId(), subtask);
+            Epic epic = epics.get(subtask.getEpicId());
+            if (epic != null) {
+                epic.addSubtask(subtask);
+                epic.updateStatus();
+            }
         }
     }
 
@@ -88,7 +78,6 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public Task getTaskById(int id) {
-
         Task task = tasks.get(id);
         historyManager.add(task);
         return task;
@@ -107,7 +96,6 @@ public class InMemoryTaskManager implements TaskManager {
         historyManager.add(subtask);
         return subtask;
     }
-    //не был уверен, но, вроде бы, формулировка ТЗ подразумевает добавление в историю только этих 3 действий
 
     @Override
     public void updateTask(Task task) {
@@ -174,24 +162,10 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public List<Task> getHistory() {
-        return new ArrayList<>(history);
-        //надеюсь, что верно понял работу такой конструкции и конфликтов возникать не должно
-
-    }
-
-    private void addToHistory(Task task) {
-        if (task != null) {
-            history.add(task);
-            if (history.size() > 10) {
-                history.removeFirst();
-            }
-        }
+        return historyManager.getHistory();
     }
 
     private int generateId() {
-        int id = idCounter;
-        idCounter = id + 1;
-        return id;
+        return idCounter++;
     }
 }
-

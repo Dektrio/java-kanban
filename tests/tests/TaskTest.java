@@ -1,7 +1,7 @@
 package tests;
 
 import org.junit.jupiter.api.Test;
-import tasksProperties.*;
+import properties.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 

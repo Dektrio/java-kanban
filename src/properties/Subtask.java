@@ -1,4 +1,4 @@
-package tasksProperties;
+package properties;
 
 public class Subtask extends Task {
 

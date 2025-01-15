@@ -1,4 +1,4 @@
-package tasksProperties;
+package properties;
 
 import java.util.*;
 
@@ -49,7 +49,7 @@ public class Task {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Task)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         Task task = (Task) o;
         return id == task.id;
     }
@@ -68,5 +68,4 @@ public class Task {
                 ", status=" + status +
                 '}';
     }
-
 }

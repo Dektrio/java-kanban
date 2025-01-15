@@ -1,11 +1,11 @@
-package taskManager;
+package manager;
 
-import tasksProperties.Task;
+import properties.Task;
 
 import java.util.*;
 
 public class InMemoryHistoryManager implements HistoryManager {
-    private static final int MAX_HISTORY_SIZE = 10; // Максимальный размер истории
+    private static final int MAX_HISTORY_SIZE = 10;
     private final LinkedList<Task> history = new LinkedList<>();
 
     @Override
@@ -13,13 +13,13 @@ public class InMemoryHistoryManager implements HistoryManager {
         if (task != null) {
             history.add(task);
             if (history.size() > MAX_HISTORY_SIZE) {
-                history.removeFirst(); // Удаляем самый старый элемент, если превышен размер
+                history.removeFirst();
             }
         }
     }
 
     @Override
     public List<Task> getHistory() {
-        return new LinkedList<>(history); // Возвращаем копию списка
+        return new LinkedList<>(history);
     }
 }

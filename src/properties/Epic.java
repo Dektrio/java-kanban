@@ -1,4 +1,4 @@
-package tasksProperties;
+package properties;
 
 import java.util.*;
 
